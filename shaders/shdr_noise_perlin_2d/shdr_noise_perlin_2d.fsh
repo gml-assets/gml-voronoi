@@ -104,20 +104,20 @@ float cnoise(vec2 P) {
 }
 
 // Original code ends here.
-float getnoise_single(int octaves, float u_persistence, float u_freq, vec2 coords) {
-  float sum = cnoise(coords * u_freq);
+float getnoise_single(float persistence, float freq, vec2 coords) {
+  float sum = cnoise(coords * freq);
   return sum * .5 + .5;
 }
 
-float getnoise_fbm(int octaves, float u_persistence, float u_freq, vec2 coords) {
+float getnoise_fbm(float persistence, float freq, vec2 coords) {
   float amp = 1.;
   float maxamp = 0.;
   float sum = 0.;
-  for (int i = 0; i < octaves; ++i) {
-    sum += amp * cnoise(coords * u_freq);
-    u_freq *= 2.1;
+  for (int i = 0; i < OCTAVES; ++i) {
+    sum += amp * cnoise(coords * freq);
+    freq *= 2.1;
     maxamp += amp;
-    amp *= u_persistence;
+    amp *= persistence;
   }
   return (sum / maxamp) * .5 + .5;
 }
@@ -128,6 +128,6 @@ void main() {
   vec2 offset = vec2(u_xoffset, u_yoffset) / u_resolution.x * u_scale;
   p += offset;
   
-  float value = NOISE(OCTAVES, u_persistence, u_freq, p);
+  float value = NOISE(u_persistence, u_freq, p);
   gl_FragColor = vec4(vec3(value), 1.0);
 }

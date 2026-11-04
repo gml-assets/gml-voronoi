@@ -10,6 +10,7 @@ u_xoffset = shader_get_uniform(shdr_noise_perlin_2d, "u_xoffset");
 u_yoffset = shader_get_uniform(shdr_noise_perlin_2d, "u_yoffset");
 
 buffer = buffer_create(sqr(size), buffer_fixed, 1);
+surf_buffer = buffer_create(sqr(size) * 4, buffer_fixed, 1);
 
 generated = false;
 surf = -1;

@@ -149,30 +149,24 @@ function delaunay_bowyer_watson(_points, _margin = 32) {
 /// @func voronoi_from_delaunay(_points, _triangulation)
 function voronoi_from_delaunay(_points, _triangulation) {
   var _triangulation_n = array_length(_triangulation);
-  var _triangles_lookup = ds_map_create();
-  
+  var _points_n = array_length(_points);
+  var _triangles_lookup = array_create_ext(_points_n, function() { return []; });
+
   // Initialize the lookup table
   for (var _i = 0; _i < _triangulation_n; ++_i) {
     var _j = 0;
 
     repeat (3) {
-      var _p = _triangulation[_i].points[_j++];
-      
-      if (!ds_map_exists(_triangles_lookup, _p)) {
-        ds_map_set(_triangles_lookup, _p, []);
-      }
-      
-      array_push(_triangles_lookup[? _p], _i);
+      var _idx = array_get_index(_points, _triangulation[_i].points[_j++]);
+      if (_idx != -1) array_push(_triangles_lookup[_idx], _i);
     }
   }
-  
+
   // For every point, sort triangles in clockwise order
-  var _points_n = array_length(_points);
   for (var _i = 0; _i < _points_n; ++_i) {
     var _p = _points[_i];
-    var _triangles = _triangles_lookup[? _p];
-    if (_triangles == undefined) continue; // Point is not part of any triangle
-    
+    var _triangles = _triangles_lookup[_i];
+
     array_sort(_triangles, method({_p, _triangulation}, function(_idx1, _idx2) {
       var _el1 = _triangulation[_idx1];
       var _el2 = _triangulation[_idx2];
@@ -190,9 +184,7 @@ function voronoi_from_delaunay(_points, _triangulation) {
   for (var _i = 0; _i < _points_n; ++_i) {
     var _p = _points[_i];
 
-    var _triangles = _triangles_lookup[? _p];
-    if (_triangles == undefined) continue; // Point is not part of any triangle
-
+    var _triangles = _triangles_lookup[_i];
     var _triangles_n = array_length(_triangles);
 
     if (_triangles_n < 3) continue; // Degenerate case
@@ -216,8 +208,7 @@ function voronoi_from_delaunay(_points, _triangulation) {
       polygon: _polygon,
     });
   }
-  
-  ds_map_destroy(_triangles_lookup);
+
   return _voronoi;
 }
 
