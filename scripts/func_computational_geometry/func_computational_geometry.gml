@@ -263,19 +263,21 @@ function polygon_clip_axis(_vertices, _axis, _value, _keep_greater) {
   var _out = [];
   if (_vertices_n == 0) return _out;
 
+  var _is_x = _axis == "x";
+
   var _prev = _vertices[_vertices_n - 1];
-  var _prev_c = _prev[$ _axis];
+  var _prev_c = _is_x ? _prev.x : _prev.y;
   var _prev_in = _keep_greater ? (_prev_c >= _value) : (_prev_c <= _value);
 
   for (var _i = 0; _i < _vertices_n; ++_i) {
     var _curr = _vertices[_i];
-    var _curr_c = _curr[$ _axis];
+    var _curr_c = _is_x ? _curr.x : _curr.y;
     var _curr_in = _keep_greater ? (_curr_c >= _value) : (_curr_c <= _value);
 
     if (_curr_in != _prev_in) {
       var _t = (_value - _prev_c) / (_curr_c - _prev_c);
       var _cross = new Point2D(lerp(_prev.x, _curr.x, _t), lerp(_prev.y, _curr.y, _t));
-      _cross[$ _axis] = _value;
+      if (_is_x) _cross.x = _value; else _cross.y = _value;
 
       array_push(_out, _cross);
     }
