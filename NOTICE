@@ -12,7 +12,7 @@ https://github.com/stegu/webgl-noise
 Adapted for GameMaker by Cem Baspinar, seed support added by @aft
 (reuse permitted under the MIT license).
 
-Used in: shaders/shdr_noise_perlin_2d/shdr_noise_perlin_2d.fsh
+Used in: src/shaders/shdr_noise_perlin_2d/shdr_noise_perlin_2d.fsh
 Changes made here: the seed offset is kept within the noise period to avoid
 losing float precision, and the octave loop uses a constant bound for WebGL.
 
