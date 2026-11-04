@@ -1,5 +1,6 @@
 /// @func map_value(_x, _in_min, _in_max, _out_min, _out_max)
 function map_value(_x, _in_min, _in_max, _out_min, _out_max) {
+  if (_in_max == _in_min) return _out_min;
   return (((_x - _in_min) / (_in_max - _in_min)) * (_out_max - _out_min)) + _out_min;
 }
 
