@@ -1,7 +1,7 @@
 /// @desc Draw output data
 draw_set_alpha(1);
 draw_set_color(BiomeType.Water);
-draw_rectangle(off_w, off_h, off_w + w, off_h + h, false);
+draw_rectangle(off_w, off_h, off_w + w - 1, off_h + h - 1, false);
 
 if (!done) exit;
 
