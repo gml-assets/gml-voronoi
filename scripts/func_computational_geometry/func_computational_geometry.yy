@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"func_computational_geometry",
   "isCompatibility":false,
   "isDnD":false,

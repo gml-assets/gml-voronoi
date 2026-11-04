@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"func_biomes",
   "isCompatibility":false,
   "isDnD":false,
