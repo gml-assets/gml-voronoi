@@ -1,4 +1,6 @@
 /// Feather use none
+#macro SEA_LEVEL 128
+
 /// @desc Biome types
 enum BiomeType {
   Water = #0095e9,

@@ -33,8 +33,7 @@ switch (step) {
   break;
   
   case 4:
-    // NOTE: has some problems with corner cases
-    voronoi_in_rect(voronoi, new Rect(0, 0, w,  h));
+    voronoi_in_rect(voronoi, new Rect(0, 0, w, h));
     
     // Init cell params
     for (var _i = 0; _i < array_length(voronoi); ++_i) {
@@ -94,8 +93,8 @@ switch (step) {
     buffer_normalize_values(noise_elevation_buffer, buffer_u8, sqr(noise_size), _min, _max, 0, 255);
     #endregion
     
-    #region Redistribute values to make half of the values below 127 and half above 127
-    buffer_change_median(noise_elevation_buffer, buffer_u8, sqr(noise_size), 0, 255, 127);
+    #region Redistribute values to make half of the cells water and half land
+    buffer_change_median(noise_elevation_buffer, buffer_u8, sqr(noise_size), 0, 255, SEA_LEVEL - 1);
     #endregion
     
     #region Apply gaussian kernel
@@ -144,7 +143,7 @@ switch (step) {
       var _v = buffer_peek(noise_elevation_buffer, _x + _y * noise_size, buffer_u8);
       
       // Assign base biome
-      _el.biome = (_v < 127) ? BiomeType.Water : BiomeType.Land;
+      _el.biome = (_v < SEA_LEVEL) ? BiomeType.Water : BiomeType.Land;
     }
     #endregion
     
@@ -201,7 +200,7 @@ switch (step) {
       var _prec = buffer_read(noise_precipitation_buffer, buffer_u8);
       var _temp = buffer_read(noise_temperature_buffer, buffer_u8);
       
-      if (_elev >= 128) {
+      if (_elev >= SEA_LEVEL) {
         _min_prec = min(_min_prec, _prec);
         _max_prec = max(_max_prec, _prec);
         

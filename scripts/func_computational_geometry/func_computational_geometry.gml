@@ -232,91 +232,29 @@ function voronoi_in_rect(_voronoi, _rect) {
   var _voronoi_n = array_length(_voronoi);
 
   for (var _i = 0; _i < _voronoi_n; ++_i) {
-    var _polygon = _voronoi[_i].polygon;
+    var _vertices = array_map(_voronoi[_i].polygon, function(_edge) {
+      return _edge[0];
+    });
 
-    var _polygon_n = array_length(_polygon);
-    var _polygon_clipped = [];
+    _vertices = polygon_clip_axis(_vertices, "x", _rect.left, true);
+    _vertices = polygon_clip_axis(_vertices, "x", _rect.right, false);
+    _vertices = polygon_clip_axis(_vertices, "y", _rect.top, true);
+    _vertices = polygon_clip_axis(_vertices, "y", _rect.bottom, false);
 
-    var _last_outside_point = -1;
+    var _vertices_n = array_length(_vertices);
+    var _polygon_clipped = array_create(_vertices_n);
 
-    var _j = 0;
-    repeat (_polygon_n) {
-      var _edge = _polygon[_j++];
-
-      // If edge is completely inside the bbox, add it to the clipped polygon
-      if (point_in_rect(_edge[0], _rect) && point_in_rect(_edge[1], _rect)) {
-        array_push(_polygon_clipped, _edge);
-      }
-      // If edge is completely outside the bbox, skip it
-      else if (line_segment_rect_intersection(_edge[0], _edge[1], _rect).n == 0) {
-        continue;
-      }
-      // If edge is going outside the box
-      else if (point_in_rect(_edge[0], _rect)) {
-        var _intersect = line_segment_rect_intersection(_edge[0], _edge[1], _rect).points[0];
-        array_push(_polygon_clipped, [_edge[0], _intersect]);
-
-        _last_outside_point = _intersect;
-      }
-      // If edge is going inside the box
-      else if (point_in_rect(_edge[1], _rect)) {
-        var _intersect = line_segment_rect_intersection(_edge[0], _edge[1], _rect).points[0];
-
-        // Link to the previous edge
-        if (_last_outside_point != -1) {
-          array_push(_polygon_clipped, [_last_outside_point, _intersect]);
-          _last_outside_point = -1;
-        }
-
-        array_push(_polygon_clipped, [_intersect, _edge[1]]);
-      }
+    for (var _j = 0; _j < _vertices_n; ++_j) {
+      _polygon_clipped[_j] = [_vertices[_j], _vertices[(_j + 1) % _vertices_n]];
     }
 
-    // Close the polygon if the last edge was outside the bbox
-    if (_last_outside_point != -1) {
-      var _first_edge = _polygon_clipped[0];
-
-      array_push(_polygon_clipped, [_last_outside_point, _first_edge[0]]);
-    }
-
-    // Fix corners
-    // If edge crosses the corner, add the corner point
-    var _polygon_fixed_corners = [];
-    
-    var _polygon_clipped_n = array_length(_polygon_clipped);
-    for (var _j = 0; _j < _polygon_clipped_n; ++_j) {
-      var _edge = _polygon_clipped[_j];
-
-      var _intersect = line_segment_rect_intersection(_edge[0], _edge[1], _rect);
-      if (_intersect.n == 2) {
-        var _cut_point = -1;
-
-        if (_intersect.left && _intersect.top) {
-          _cut_point = new Point2D(_rect.left, _rect.top);
-        } else if (_intersect.right && _intersect.top) {
-          _cut_point = new Point2D(_rect.right, _rect.top);
-        } else if (_intersect.right && _intersect.bottom) {
-          _cut_point = new Point2D(_rect.right, _rect.bottom);
-        } else if (_intersect.left && _intersect.bottom) {
-          _cut_point = new Point2D(_rect.left, _rect.bottom);
-        }
-
-        if (_cut_point != -1) {
-          array_push(_polygon_fixed_corners, [_edge[0], _cut_point]);
-          array_push(_polygon_fixed_corners, [_cut_point, _edge[1]]);
-        }
-      } else {
-        array_push(_polygon_fixed_corners, _edge);
-      }
-    }
-
-    _voronoi[_i].polygon = _polygon_fixed_corners;
+    _voronoi[_i].polygon = _polygon_clipped;
   }
 
   // Remove empty polygons
   var _n = _voronoi_n;
   while (_n--) {
-    if (array_length(_voronoi[_n].polygon) == 0) {
+    if (array_length(_voronoi[_n].polygon) < 3) {
       array_delete(_voronoi, _n, 1);
       --_voronoi_n;
     }
@@ -328,6 +266,43 @@ function voronoi_in_rect(_voronoi, _rect) {
     _site.x = clamp(_site.x, _rect.left, _rect.right);
     _site.y = clamp(_site.y, _rect.top, _rect.bottom);
   }
+}
+
+/// @func polygon_clip_axis(_vertices, _axis, _value, _keep_greater)
+/// @param {Array<Struct.Point2D>} _vertices
+/// @param {String} _axis "x" or "y"
+/// @param {Real} _value Position of the clipping line
+/// @param {Bool} _keep_greater Keep the side with coordinates >= _value
+function polygon_clip_axis(_vertices, _axis, _value, _keep_greater) {
+  var _vertices_n = array_length(_vertices);
+  var _out = [];
+  if (_vertices_n == 0) return _out;
+
+  var _prev = _vertices[_vertices_n - 1];
+  var _prev_c = _prev[$ _axis];
+  var _prev_in = _keep_greater ? (_prev_c >= _value) : (_prev_c <= _value);
+
+  for (var _i = 0; _i < _vertices_n; ++_i) {
+    var _curr = _vertices[_i];
+    var _curr_c = _curr[$ _axis];
+    var _curr_in = _keep_greater ? (_curr_c >= _value) : (_curr_c <= _value);
+
+    if (_curr_in != _prev_in) {
+      var _t = (_value - _prev_c) / (_curr_c - _prev_c);
+      var _cross = new Point2D(lerp(_prev.x, _curr.x, _t), lerp(_prev.y, _curr.y, _t));
+      _cross[$ _axis] = _value;
+
+      array_push(_out, _cross);
+    }
+
+    if (_curr_in) array_push(_out, _curr);
+
+    _prev = _curr;
+    _prev_c = _curr_c;
+    _prev_in = _curr_in;
+  }
+
+  return _out;
 }
 
 /// @func lloyd_relaxation(_voronoi)
