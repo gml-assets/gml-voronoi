@@ -18,7 +18,7 @@ if (variable_global_exists("next_seed") && global.next_seed != undefined) {
   global.next_seed = undefined;
 } else {
   randomize();
-  seed = random_get_seed();
+  seed = abs(random_get_seed());
 }
 random_set_seed(seed);
 

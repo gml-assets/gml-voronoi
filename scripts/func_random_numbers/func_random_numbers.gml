@@ -1,7 +1,7 @@
 /// @func Halton(_halton_base, [_halton_seed])
 function Halton(_halton_base, _halton_seed = 1) constructor {
   halton_base = _halton_base;
-  halton_seed = _halton_seed;
+  halton_seed = abs(floor(_halton_seed));
 
   static get_next = function() {
     var _out = 0;
