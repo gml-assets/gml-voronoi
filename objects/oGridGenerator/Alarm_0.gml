@@ -11,35 +11,35 @@ switch (step) {
       array_push(points, new Point2D(_x, _y));
     }
     
-    // Add bounds
-    array_push(points, new Point2D(-off_w, -off_h));
-    array_push(points, new Point2D(w + off_w, -off_h));
-    array_push(points, new Point2D(-off_w, h + off_h));
-    array_push(points, new Point2D(w + off_w, h + off_h));
-    
+    // Fixed bounds, so every point has a closed cell
+    bounds = [
+      new Point2D(-off_w, -off_h),
+      new Point2D(w + off_w, -off_h),
+      new Point2D(-off_w, h + off_h),
+      new Point2D(w + off_w, h + off_h),
+    ];
+
     alarm[0] = 1;
     ++step;
   break;
-  
+
   case 1:
   case 2:
   case 3:
-    delaunay = delaunay_bowyer_watson(points, 512);
-    voronoi = voronoi_from_delaunay(points, delaunay);
-    points = lloyd_relaxation(voronoi);
-    
-    alarm[0] = 1;
-    ++step;
-  break;
-  
   case 4:
+    delaunay = delaunay_bowyer_watson(array_concat(points, bounds), 512);
+    voronoi = voronoi_from_delaunay(points, delaunay);
     voronoi_in_rect(voronoi, new Rect(0, 0, w, h));
-    
-    // Init cell params
-    for (var _i = 0; _i < array_length(voronoi); ++_i) {
-      voronoi[_i].biome = BiomeType.Water;
+
+    if (step < 4) {
+      points = lloyd_relaxation(voronoi);
+    } else {
+      // Init cell params
+      for (var _i = 0; _i < array_length(voronoi); ++_i) {
+        voronoi[_i].biome = BiomeType.Water;
+      }
     }
-    
+
     alarm[0] = 1;
     ++step;
   break;
