@@ -7,9 +7,7 @@ off_h = (room_height - h) / 2;
 
 // Seeding
 randomize();
-
 seed = random_get_seed();
-random_set_seed(seed);
 
 var _seed_elevation = irandom(32_000);
 var _seed_temperature = irandom(32_000);

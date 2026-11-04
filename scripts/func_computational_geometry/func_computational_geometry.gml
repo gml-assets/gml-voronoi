@@ -219,7 +219,6 @@ function voronoi_from_delaunay(_points, _triangulation) {
     array_push(_voronoi, {
       site: _p,
       polygon: _polygon,
-      triangles: _triangles,
     });
   }
   

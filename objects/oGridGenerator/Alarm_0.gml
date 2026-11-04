@@ -37,12 +37,7 @@ switch (step) {
     
     // Init cell params
     for (var _i = 0; _i < array_length(voronoi); ++_i) {
-      var _el = voronoi[_i];
-      
-      _el.temperature_colour = c_black;
-      _el.precipitation_colour = c_black;
-      
-      _el.biome = BiomeType.Water;
+      voronoi[_i].biome = BiomeType.Water;
     }
     
     alarm[0] = 1;
@@ -104,9 +99,6 @@ switch (step) {
         var _value = real(buffer_peek(noise_precipitation_buffer, _x + _y * noise_size, buffer_u8));
         
         _value = round(255 - gauss_kernel[_x][_y] * _value);
-        
-        _min = min(_min, _value);
-        _max = max(_max, _value);
         
         buffer_write(noise_precipitation_buffer, buffer_u8, _value);
       }
@@ -235,26 +227,13 @@ switch (step) {
       var _prec = buffer_peek(noise_precipitation_buffer, _x + _y * noise_size, buffer_u8);
       
       if (_el.biome == BiomeType.Land) {
-        //_el.temperature_colour = make_colour_rgb(_temp, 0, 255 - _temp); // TEMPERATURE MAP
-        //_el.precipitation_colour = merge_color(c_white, c_blue, real(_precip) / 255); // PRECIPITATION MAP
-        //_el.biome = _el.precipitation_colour; //merge_color(_el.temperature_colour, _el.precipitation_colour, .5);
         _el.biome = whittaker_diagram(real(_temp), real(_prec));
       }
     }
     #endregion
     
-    alarm[0] = 1;
     ++step;
-    
     done = true;
-  break;
-  
-  case 10:
-    //instance_destroy(noise_elevation);
-    //instance_destroy(noise_precipitation);
-    //instance_destroy(noise_temperature);
-    
-    ++step;
   break;
 }
 show_debug_message($"Step {step} took {(get_timer() - _t) / 1000} ms");
