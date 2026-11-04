@@ -102,18 +102,13 @@ function delaunay_bowyer_watson(_points, _margin = 32) {
       }
     }
 
-    // Remove bad triangles from triangulation
-    for (var _j = 0; _j < array_length(_bad_triangles); ++_j) {
-      _triangulation[_bad_triangles[_j]] = undefined;
+    // Remove bad triangles from triangulation (indices are ascending)
+    var _j = _bad_triangles_n;
+    while (_j--) {
+      _triangulation[_bad_triangles[_j]] = array_last(_triangulation);
+      array_pop(_triangulation);
     }
-
-    var _n = _triangulation_n;
-    while (_n--) {
-      if (_triangulation[_n] == undefined) {
-        array_delete(_triangulation, _n, 1);
-        --_triangulation_n;
-      }
-    }
+    _triangulation_n -= _bad_triangles_n;
 
     // Re-triangulate the polygonal hole
     for (var _j = 0; _j < array_length(_polygon); ++_j) {

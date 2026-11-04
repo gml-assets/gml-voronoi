@@ -1,6 +1,8 @@
 /// @desc Draw output data
 draw_set_alpha(1);
 draw_set_color(c_white);
+draw_set_halign(fa_left);
+draw_text(8, room_height - 24, "Hold \"Q\" to show noise maps");
 draw_set_halign(fa_center);
 draw_text(room_width / 2, 8, seed);
 

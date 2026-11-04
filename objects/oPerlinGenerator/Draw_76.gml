@@ -4,7 +4,7 @@ if (!generated) {
   
   surface_set_target(surf);
   shader_set(shdr_noise_perlin_2d);
-    shader_set_uniform_f_array(u_resolution, [size, size]);
+    shader_set_uniform_f(u_resolution, size, size);
     shader_set_uniform_f(u_seed, seed);
     shader_set_uniform_f(u_persistence, persistence);
     shader_set_uniform_f(u_freq, frequency);
