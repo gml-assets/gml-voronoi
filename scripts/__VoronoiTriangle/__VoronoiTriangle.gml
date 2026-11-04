@@ -1,8 +1,8 @@
 /// @func __VoronoiTriangle(_p1, _p2, _p3)
 /// @desc A triangle of the triangulation, with its centroid and circumcircle
-/// @param {Struct.VoronoiPoint} _p1
-/// @param {Struct.VoronoiPoint} _p2
-/// @param {Struct.VoronoiPoint} _p3
+/// @param {Struct} _p1
+/// @param {Struct} _p2
+/// @param {Struct} _p3
 function __VoronoiTriangle(_p1, _p2, _p3) constructor {
     /// @func circumcircle_x(_x1, _y1, _x2, _y2, _x3, _y3)
     /// @desc X of the circumcircle centre

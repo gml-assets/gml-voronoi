@@ -1,8 +1,11 @@
-/// @func voronoi_in_rect(_voronoi, _rect)
+/// @func voronoi_in_rect(_voronoi, _left, _top, _right, _bottom)
 /// @desc Clips the cells to the rect in place. Drops the cells left outside and clamps the sites
 /// @param {Array<Struct>} _voronoi from voronoi_from_delaunay
-/// @param {Struct.VoronoiRect} _rect
-function voronoi_in_rect(_voronoi, _rect) {
+/// @param {Real} _left
+/// @param {Real} _top
+/// @param {Real} _right
+/// @param {Real} _bottom
+function voronoi_in_rect(_voronoi, _left, _top, _right, _bottom) {
     var _voronoi_n = array_length(_voronoi);
     
     for (var _i = 0; _i < _voronoi_n; ++_i) {
@@ -10,10 +13,10 @@ function voronoi_in_rect(_voronoi, _rect) {
             return _edge[0];
         });
         
-        _vertices = __voronoi_clip_axis(_vertices, "x", _rect.left, true);
-        _vertices = __voronoi_clip_axis(_vertices, "x", _rect.right, false);
-        _vertices = __voronoi_clip_axis(_vertices, "y", _rect.top, true);
-        _vertices = __voronoi_clip_axis(_vertices, "y", _rect.bottom, false);
+        _vertices = __voronoi_clip_axis(_vertices, "x", _left, true);
+        _vertices = __voronoi_clip_axis(_vertices, "x", _right, false);
+        _vertices = __voronoi_clip_axis(_vertices, "y", _top, true);
+        _vertices = __voronoi_clip_axis(_vertices, "y", _bottom, false);
         
         var _vertices_n = array_length(_vertices);
         var _polygon_clipped = array_create(_vertices_n);
@@ -37,18 +40,18 @@ function voronoi_in_rect(_voronoi, _rect) {
     for (var _i = 0; _i < _voronoi_n; ++_i) {
         var _site = _voronoi[_i].site;
         
-        _site.x = clamp(_site.x, _rect.left, _rect.right);
-        _site.y = clamp(_site.y, _rect.top, _rect.bottom);
+        _site.x = clamp(_site.x, _left, _right);
+        _site.y = clamp(_site.y, _top, _bottom);
     }
 }
 
 /// @func __voronoi_clip_axis(_vertices, _axis, _value, _keep_greater)
 /// @desc Clips a polygon against an axis-aligned line, one Sutherland-Hodgman step
-/// @param {Array<Struct.VoronoiPoint>} _vertices
+/// @param {Array<Struct>} _vertices
 /// @param {String} _axis "x" or "y"
 /// @param {Real} _value position of the line
 /// @param {Bool} _keep_greater keep the side with coordinates >= _value
-/// @returns {Array<Struct.VoronoiPoint>}
+/// @returns {Array<Struct>}
 function __voronoi_clip_axis(_vertices, _axis, _value, _keep_greater) {
     var _vertices_n = array_length(_vertices);
     var _out = [];
@@ -67,7 +70,7 @@ function __voronoi_clip_axis(_vertices, _axis, _value, _keep_greater) {
         
         if (_curr_in != _prev_in) {
             var _t = (_value - _prev_c) / (_curr_c - _prev_c);
-            var _cross = new VoronoiPoint(lerp(_prev.x, _curr.x, _t), lerp(_prev.y, _curr.y, _t));
+            var _cross = { x: lerp(_prev.x, _curr.x, _t), y: lerp(_prev.y, _curr.y, _t) };
             if (_is_x) _cross.x = _value; else _cross.y = _value;
             
             array_push(_out, _cross);

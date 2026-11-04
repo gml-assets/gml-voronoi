@@ -1,6 +1,6 @@
 /// @func delaunay_bowyer_watson(_points, [_margin])
 /// @desc Delaunay triangulation of the points (Bowyer-Watson)
-/// @param {Array<Struct.VoronoiPoint>} _points
+/// @param {Array<Struct>} _points structs with x and y, no duplicates
 /// @param {Real} [_margin] space between the points and the starting super triangle
 /// @returns {Array<Struct.__VoronoiTriangle>}
 function delaunay_bowyer_watson(_points, _margin = 32) {
@@ -40,9 +40,9 @@ function delaunay_bowyer_watson(_points, _margin = 32) {
     
     // Super triangle
     var _super_triangle = new __VoronoiTriangle(
-        new VoronoiPoint(_aabb_left - _hw, _aabb_bottom),
-        new VoronoiPoint(_aabb_left + _hw, _aabb_top - _h),
-        new VoronoiPoint(_aabb_right + _hw, _aabb_bottom)
+        { x: _aabb_left - _hw, y: _aabb_bottom },
+        { x: _aabb_left + _hw, y: _aabb_top - _h },
+        { x: _aabb_right + _hw, y: _aabb_bottom }
     );
     
     array_push(_triangulation, _super_triangle);
@@ -90,7 +90,7 @@ function delaunay_bowyer_watson(_points, _margin = 32) {
                     for (var _n = 0; _n < 3 && !_shared; ++_n) {
                         var _p4 = _tri_other.points[_n];
                         
-                        if (_p1.is_equal(_p4) && _p2.is_equal(_p3)) || (_p2.is_equal(_p4) && _p1.is_equal(_p3)) {
+                        if ((_p1 == _p4 && _p2 == _p3) || (_p2 == _p4 && _p1 == _p3)) {
                             _shared = true;
                         }
                         
@@ -132,7 +132,7 @@ function delaunay_bowyer_watson(_points, _margin = 32) {
         for (var _j = 0; _j < 3; ++_j) {
             _p = _tri.points[_j];
             
-            if (_p.is_equal(_super_triangle.points[0]) || _p.is_equal(_super_triangle.points[1]) || _p.is_equal(_super_triangle.points[2])) {
+            if (_p == _super_triangle.points[0] || _p == _super_triangle.points[1] || _p == _super_triangle.points[2]) {
                 _triangulation[_i] = undefined;
                 break;
             }

@@ -8,16 +8,16 @@ switch (step) {
         repeat (400) {
             var _x = _halton_2d[0].get_next() * w;
             var _y = _halton_2d[1].get_next() * h;
-            array_push(points, new VoronoiPoint(_x, _y));
+            array_push(points, { x: _x, y: _y });
         }
         
         // Fixed bounds, so every point has a closed cell
         var _m = 32;
         bounds = [
-            new VoronoiPoint(-_m, -_m),
-            new VoronoiPoint(w + _m, -_m),
-            new VoronoiPoint(-_m, h + _m),
-            new VoronoiPoint(w + _m, h + _m),
+            { x: -_m, y: -_m },
+            { x: w + _m, y: -_m },
+            { x: -_m, y: h + _m },
+            { x: w + _m, y: h + _m },
         ];
         
         alarm[0] = 1;
@@ -30,7 +30,7 @@ switch (step) {
     case 4:
         delaunay = delaunay_bowyer_watson(array_concat(points, bounds), 512);
         voronoi = voronoi_from_delaunay(points, delaunay);
-        voronoi_in_rect(voronoi, new VoronoiRect(0, 0, w, h));
+        voronoi_in_rect(voronoi, 0, 0, w, h);
         
         if (step < 4) {
             points = lloyd_relaxation(voronoi);

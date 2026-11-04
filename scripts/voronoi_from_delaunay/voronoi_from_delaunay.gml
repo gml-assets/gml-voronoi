@@ -1,8 +1,8 @@
 /// @func voronoi_from_delaunay(_points, _triangulation)
 /// @desc Voronoi cells of the points. Points in fewer than 3 triangles get no cell
-/// @param {Array<Struct.VoronoiPoint>} _points
+/// @param {Array<Struct>} _points the triangulated points to make cells for
 /// @param {Array<Struct.__VoronoiTriangle>} _triangulation from delaunay_bowyer_watson
-/// @returns {Array<Struct>} cells as { site, polygon }, the polygon is an array of [VoronoiPoint, VoronoiPoint] edges
+/// @returns {Array<Struct>} cells as { site, polygon }, the polygon is an array of [{ x, y }, { x, y }] edges
 function voronoi_from_delaunay(_points, _triangulation) {
     var _triangulation_n = array_length(_triangulation);
     var _points_n = array_length(_points);
@@ -52,8 +52,8 @@ function voronoi_from_delaunay(_points, _triangulation) {
             var _tri_next = _triangulation[_triangles[(_j + 1) % _triangles_n]];
             
             var _edge = [
-                new VoronoiPoint(_tri.circumcenter_x, _tri.circumcenter_y),
-                new VoronoiPoint(_tri_next.circumcenter_x, _tri_next.circumcenter_y)
+                { x: _tri.circumcenter_x, y: _tri.circumcenter_y },
+                { x: _tri_next.circumcenter_x, y: _tri_next.circumcenter_y }
             ];
             
             array_push(_polygon, _edge);
