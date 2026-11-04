@@ -1,5 +1,5 @@
 /// Feather use none
-/// @decs Biome types
+/// @desc Biome types
 enum BiomeType {
   Water = #0095e9,
   Land  = #b86f50,

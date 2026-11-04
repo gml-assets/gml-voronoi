@@ -1,6 +1,7 @@
 /// @func delaunay_bowyer_watson(_points, [_margin])
 function delaunay_bowyer_watson(_points, _margin = 32) {
   var _points_n = array_length(_points);
+  if (_points_n < 3) return []; // Not enough points for a triangle
 
   var _triangulation = [];
   var _triangulation_n = 0;
@@ -150,8 +151,8 @@ function delaunay_bowyer_watson(_points, _margin = 32) {
   return _triangulation;
 }
 
-/// @func voronoi_from_delanay(_points, _triangulation, [_bbox])
-function voronoi_from_delanay(_points, _triangulation, _bbox = undefined) {
+/// @func voronoi_from_delaunay(_points, _triangulation)
+function voronoi_from_delaunay(_points, _triangulation) {
   var _triangulation_n = array_length(_triangulation);
   var _triangles_lookup = ds_map_create();
   
@@ -175,6 +176,7 @@ function voronoi_from_delanay(_points, _triangulation, _bbox = undefined) {
   for (var _i = 0; _i < _points_n; ++_i) {
     var _p = _points[_i];
     var _triangles = _triangles_lookup[? _p];
+    if (_triangles == undefined) continue; // Point is not part of any triangle
     
     array_sort(_triangles, method({_p, _triangulation}, function(_idx1, _idx2) {
       var _el1 = _triangulation[_idx1];
@@ -194,6 +196,8 @@ function voronoi_from_delanay(_points, _triangulation, _bbox = undefined) {
     var _p = _points[_i];
 
     var _triangles = _triangles_lookup[? _p];
+    if (_triangles == undefined) continue; // Point is not part of any triangle
+
     var _triangles_n = array_length(_triangles);
 
     if (_triangles_n < 3) continue; // Degenerate case
@@ -271,10 +275,8 @@ function voronoi_in_rect(_voronoi, _rect) {
     // Close the polygon if the last edge was outside the bbox
     if (_last_outside_point != -1) {
       var _first_edge = _polygon_clipped[0];
-      var _last_edge = _polygon_clipped[array_length(_polygon_clipped) - 1];
 
       array_push(_polygon_clipped, [_last_outside_point, _first_edge[0]]);
-      array_push(_polygon_clipped, [_last_edge[1], _last_outside_point]);
     }
 
     // Fix corners

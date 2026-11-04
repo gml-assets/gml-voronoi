@@ -24,7 +24,7 @@ function buffer_get_median(_buff, _buff_data_type, _buff_size) {
   
   array_sort(_arr, true);
   
-  return _arr[round(_buff_size / 2)];
+  return _arr[_buff_size div 2];
 }
 
 /// @func buffer_change_median(_buff, _buff_data_type, _buff_size, _in_min, _in_max, _median)
@@ -43,6 +43,6 @@ function buffer_change_median(_buff, _buff_data_type, _buff_size, _in_min, _in_m
     }
     _val = round(_val);
     
-    buffer_write(_buff, buffer_u8, _val);
+    buffer_write(_buff, _buff_data_type, _val);
   }
 }

@@ -25,7 +25,7 @@ switch (step) {
   case 2:
   case 3:
     delaunay = delaunay_bowyer_watson(points, 512);
-    voronoi = voronoi_from_delanay(points, delaunay);
+    voronoi = voronoi_from_delaunay(points, delaunay);
     points = lloyd_relaxation(voronoi);
     
     alarm[0] = 1;
@@ -143,7 +143,7 @@ switch (step) {
       
       var _v = buffer_peek(noise_elevation_buffer, _x + _y * noise_size, buffer_u8);
       
-      // Assing base biome
+      // Assign base biome
       _el.biome = (_v < 127) ? BiomeType.Water : BiomeType.Land;
     }
     #endregion
@@ -214,9 +214,11 @@ switch (step) {
     buffer_normalize_values(noise_temperature_buffer, buffer_u8, sqr(noise_size), _min_temp, _max_temp, 0, 255);
     #endregion
     
-    noise_elevation.surf = -1;
-    noise_precipitation.surf = -1;
-    noise_temperature.surf = -1;
+    // Free the noise surfaces, they are recreated from the updated buffers
+    with (oPerlinGenerator) {
+      if (surface_exists(surf)) surface_free(surf);
+      surf = -1;
+    }
     
     alarm[0] = 1;
     ++step;

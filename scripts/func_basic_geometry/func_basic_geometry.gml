@@ -1,3 +1,8 @@
+/// @func in_range(_x, _min, _max)
+function in_range(_x, _min, _max) {
+  return _x >= _min && _x <= _max;
+}
+
 /// @func Point2D(_x, _y)
 function Point2D(_x, _y) constructor {
   x = _x;
@@ -59,8 +64,8 @@ function point_in_rect(_p, _rect) {
   return in_range(_p.x, _rect.left, _rect.right) && in_range(_p.y, _rect.top, _rect.bottom);
 }
 
-/// @func lines_intesection(_p0, _p1, _p2, _p3)
-function lines_intesection(_p0, _p1, _p2, _p3) {
+/// @func lines_intersection(_p0, _p1, _p2, _p3)
+function lines_intersection(_p0, _p1, _p2, _p3) {
   var _s1_x = _p1.x - _p0.x;
   var _s1_y = _p1.y - _p0.y;
   var _s2_x = _p3.x - _p2.x;
@@ -83,10 +88,17 @@ function line_segment_rect_intersection(_p1, _p2, _rect) {
   var _bbox_right_top = new Point2D(_rect.right, _rect.top);
   var _bbox_right_bottom = new Point2D(_rect.right, _rect.bottom);
 
-  var _left = lines_intesection(_p1, _p2, _bbox_left_top, _bbox_left_bottom);
-  var _right = lines_intesection(_p1, _p2, _bbox_right_top, _bbox_right_bottom);
-  var _top = lines_intesection(_p1, _p2, _bbox_left_top, _bbox_right_top);
-  var _bottom = lines_intesection(_p1, _p2, _bbox_left_bottom, _bbox_right_bottom);
+  var _left = lines_intersection(_p1, _p2, _bbox_left_top, _bbox_left_bottom);
+  var _right = lines_intersection(_p1, _p2, _bbox_right_top, _bbox_right_bottom);
+  var _top = lines_intersection(_p1, _p2, _bbox_left_top, _bbox_right_top);
+  var _bottom = lines_intersection(_p1, _p2, _bbox_left_bottom, _bbox_right_bottom);
+
+  // Put the intersection points exactly on the sides,
+  // so rounding errors don't hide them from later checks
+  if (_left != -1) _left.x = _rect.left;
+  if (_right != -1) _right.x = _rect.right;
+  if (_top != -1) _top.y = _rect.top;
+  if (_bottom != -1) _bottom.y = _rect.bottom;
 
   var _out = {
     points: [],

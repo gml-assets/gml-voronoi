@@ -1,8 +1,3 @@
-/// @func in_range(_x, _min, _max)
-function in_range(_x, _min, _max) {
-  return _x >= _min && _x <= _max;
-}
-
 /// @func map_value(_x, _in_min, _in_max, _out_min, _out_max)
 function map_value(_x, _in_min, _in_max, _out_min, _out_max) {
   return (((_x - _in_min) / (_in_max - _in_min)) * (_out_max - _out_min)) + _out_min;
