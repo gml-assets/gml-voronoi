@@ -64,7 +64,7 @@ vec2 fade(vec2 t) {
 
 // Classic Perlin noise
 float cnoise(vec2 P) {
-  P += sin(u_seed * 1.78291351) * 1e6; // seed addition by shifting pos.
+  P += mod(u_seed * vec2(12.9898, 78.233), 289.0); // seed addition by shifting pos.
 
   vec4 Pi = floor(P.xyxy) + vec4(0.0, 0.0, 1.0, 1.0);
   vec4 Pf = fract(P.xyxy) - vec4(0.0, 0.0, 1.0, 1.0);
