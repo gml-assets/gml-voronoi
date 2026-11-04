@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"func_random_numbers",
   "parent":{
-    "name":"Scripts",
-    "path":"folders/Scripts.yy",
+    "name":"Core",
+    "path":"folders/Core.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

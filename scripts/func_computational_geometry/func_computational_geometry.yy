@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"func_computational_geometry",
   "parent":{
-    "name":"Scripts",
-    "path":"folders/Scripts.yy",
+    "name":"Core",
+    "path":"folders/Core.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

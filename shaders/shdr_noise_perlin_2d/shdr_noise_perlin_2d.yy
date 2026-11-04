@@ -4,7 +4,7 @@
   "name":"shdr_noise_perlin_2d",
   "parent":{
     "name":"Shaders",
-    "path":"folders/Shaders.yy",
+    "path":"folders/Example/Shaders.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",
