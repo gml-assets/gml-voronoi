@@ -30,6 +30,10 @@ enum BT {
 }
 
 /// @func whittaker_diagram(_temp, _precip)
+/// @desc The biome for a temperature and precipitation, both 0-255
+/// @param {Real} _temp
+/// @param {Real} _precip
+/// @returns {Real} a BiomeType colour
 function whittaker_diagram(_temp, _precip) {
   static _biome_table = [
     [BT.SI, BT.SI, BT.SI, BT.SI, BT.SI],

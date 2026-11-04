@@ -1,10 +1,22 @@
 /// @func map_value(_x, _in_min, _in_max, _out_min, _out_max)
+/// @desc Maps a value from one range to another
+/// @param {Real} _x
+/// @param {Real} _in_min
+/// @param {Real} _in_max
+/// @param {Real} _out_min
+/// @param {Real} _out_max
+/// @returns {Real}
 function map_value(_x, _in_min, _in_max, _out_min, _out_max) {
   if (_in_max == _in_min) return _out_min;
   return (((_x - _in_min) / (_in_max - _in_min)) * (_out_max - _out_min)) + _out_min;
 }
 
 /// @func linspace(_from, _to, _size)
+/// @desc _size evenly spaced numbers from _from to _to
+/// @param {Real} _from
+/// @param {Real} _to
+/// @param {Real} _size
+/// @returns {Array<Real>}
 function linspace(_from, _to, _size) {
   var _step = (_to - _from) / (_size - 1);
   var _result = array_create(_size);
@@ -19,6 +31,11 @@ function linspace(_from, _to, _size) {
 }
 
 /// @func gaussian_kernel_2d(_size, [_sigma], [_mu])
+/// @desc A _size by _size Gaussian over [-1, 1], peaking at 1 in the centre
+/// @param {Real} _size
+/// @param {Real} [_sigma]
+/// @param {Real} [_mu]
+/// @returns {Array<Array<Real>>}
 function gaussian_kernel_2d(_size, _sigma = .5, _mu = 0) {
   var _kernel = array_create_ext(_size, method({_size}, function() {
     return array_create(_size);
@@ -39,6 +56,9 @@ function gaussian_kernel_2d(_size, _sigma = .5, _mu = 0) {
 }
 
 /// @func get_perlin_noise([_struct])
+/// @desc Creates an oPerlinGenerator that renders a noise map
+/// @param {Struct} [_struct] its variables: size, seed, frequency, persistence, scale, xoff, yoff
+/// @returns {Id.Instance}
 function get_perlin_noise(_struct = {}) {
   return instance_create_depth(0, 0, 0, oPerlinGenerator, _struct);
 }

@@ -1,6 +1,12 @@
 /// @func __VoronoiTriangle(_p1, _p2, _p3)
+/// @desc A triangle of the triangulation, with its centroid and circumcircle
+/// @param {Struct.VoronoiPoint} _p1
+/// @param {Struct.VoronoiPoint} _p2
+/// @param {Struct.VoronoiPoint} _p3
 function __VoronoiTriangle(_p1, _p2, _p3) constructor {
   /// @func circumcircle_x(_x1, _y1, _x2, _y2, _x3, _y3)
+  /// @desc X of the circumcircle centre
+  /// @returns {Real}
   static circumcircle_x = function(_x1, _y1, _x2, _y2, _x3, _y3) {
     var _a = _x1 * _x1 + _y1 * _y1;
     var _b = _x2 * _x2 + _y2 * _y2;
@@ -13,6 +19,8 @@ function __VoronoiTriangle(_p1, _p2, _p3) constructor {
   };
 
   /// @func circumcircle_y(_x1, _y1, _x2, _y2, _x3, _y3)
+  /// @desc Y of the circumcircle centre
+  /// @returns {Real}
   static circumcircle_y = function(_x1, _y1, _x2, _y2, _x3, _y3) {
     var _a = _x1 * _x1 + _y1 * _y1;
     var _b = _x2 * _x2 + _y2 * _y2;

@@ -1,4 +1,8 @@
 /// @func delaunay_bowyer_watson(_points, [_margin])
+/// @desc Delaunay triangulation of the points (Bowyer-Watson)
+/// @param {Array<Struct.VoronoiPoint>} _points
+/// @param {Real} [_margin] space between the points and the starting super triangle
+/// @returns {Array<Struct.__VoronoiTriangle>}
 function delaunay_bowyer_watson(_points, _margin = 32) {
   var _points_n = array_length(_points);
   if (_points_n < 3) return []; // Not enough points for a triangle

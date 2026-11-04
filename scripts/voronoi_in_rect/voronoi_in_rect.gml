@@ -1,4 +1,7 @@
 /// @func voronoi_in_rect(_voronoi, _rect)
+/// @desc Clips the cells to the rect in place. Drops the cells left outside and clamps the sites
+/// @param {Array<Struct>} _voronoi from voronoi_from_delaunay
+/// @param {Struct.VoronoiRect} _rect
 function voronoi_in_rect(_voronoi, _rect) {
   var _voronoi_n = array_length(_voronoi);
 
@@ -40,10 +43,12 @@ function voronoi_in_rect(_voronoi, _rect) {
 }
 
 /// @func __voronoi_clip_axis(_vertices, _axis, _value, _keep_greater)
+/// @desc Clips a polygon against an axis-aligned line, one Sutherland-Hodgman step
 /// @param {Array<Struct.VoronoiPoint>} _vertices
 /// @param {String} _axis "x" or "y"
-/// @param {Real} _value Position of the clipping line
-/// @param {Bool} _keep_greater Keep the side with coordinates >= _value
+/// @param {Real} _value position of the line
+/// @param {Bool} _keep_greater keep the side with coordinates >= _value
+/// @returns {Array<Struct.VoronoiPoint>}
 function __voronoi_clip_axis(_vertices, _axis, _value, _keep_greater) {
   var _vertices_n = array_length(_vertices);
   var _out = [];

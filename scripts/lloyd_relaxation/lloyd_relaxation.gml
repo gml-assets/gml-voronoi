@@ -1,4 +1,7 @@
 /// @func lloyd_relaxation(_voronoi)
+/// @desc One step of Lloyd's relaxation: the centroid of every cell. Clip the cells first
+/// @param {Array<Struct>} _voronoi
+/// @returns {Array<Struct.VoronoiPoint>}
 function lloyd_relaxation(_voronoi) {
   var _voronoi_n = array_length(_voronoi);
   var _points = array_create(_voronoi_n);
