@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"func_random_numbers",
+  "%Name":"delaunay_bowyer_watson",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"func_random_numbers",
+  "name":"delaunay_bowyer_watson",
   "parent":{
-    "name":"Core",
-    "path":"folders/Core.yy",
+    "name":"Voronoi",
+    "path":"folders/Voronoi.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

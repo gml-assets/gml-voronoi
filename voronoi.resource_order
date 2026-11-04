@@ -1,6 +1,6 @@
 {
   "FolderOrderSettings":[
-    {"name":"Core","order":1,"path":"folders/Core.yy",},
+    {"name":"Voronoi","order":1,"path":"folders/Voronoi.yy",},
     {"name":"Example","order":2,"path":"folders/Example.yy",},
     {"name":"Objects","order":9,"path":"folders/Example/Objects.yy",},
     {"name":"Rooms","order":10,"path":"folders/Example/Rooms.yy",},
@@ -11,10 +11,8 @@
   "ResourceOrderSettings":[
     {"name":"oDataPoint","order":1,"path":"objects/oDataPoint/oDataPoint.yy",},
     {"name":"oPerlinGenerator","order":2,"path":"objects/oPerlinGenerator/oPerlinGenerator.yy",},
-    {"name":"func_basic_geometry","order":3,"path":"scripts/func_basic_geometry/func_basic_geometry.yy",},
     {"name":"func_biomes","order":5,"path":"scripts/func_biomes/func_biomes.yy",},
     {"name":"func_buffers","order":6,"path":"scripts/func_buffers/func_buffers.yy",},
     {"name":"func_common","order":4,"path":"scripts/func_common/func_common.yy",},
-    {"name":"func_random_numbers","order":1,"path":"scripts/func_random_numbers/func_random_numbers.yy",},
   ],
 }

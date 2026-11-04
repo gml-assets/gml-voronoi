@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"func_basic_geometry",
+  "%Name":"lloyd_relaxation",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"func_basic_geometry",
+  "name":"lloyd_relaxation",
   "parent":{
-    "name":"Core",
-    "path":"folders/Core.yy",
+    "name":"Voronoi",
+    "path":"folders/Voronoi.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"func_computational_geometry",
+  "%Name":"Rect",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"func_computational_geometry",
+  "name":"Rect",
   "parent":{
-    "name":"Core",
-    "path":"folders/Core.yy",
+    "name":"Voronoi",
+    "path":"folders/Voronoi.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

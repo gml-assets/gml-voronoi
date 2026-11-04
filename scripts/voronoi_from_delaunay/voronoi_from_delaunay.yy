@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"voronoi_from_delaunay",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"voronoi_from_delaunay",
+  "parent":{
+    "name":"Voronoi",
+    "path":"folders/Voronoi.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
