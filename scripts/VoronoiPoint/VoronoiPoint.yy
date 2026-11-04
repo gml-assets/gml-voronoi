@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"Point2D",
+  "%Name":"VoronoiPoint",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"Point2D",
+  "name":"VoronoiPoint",
   "parent":{
     "name":"Voronoi",
     "path":"folders/Voronoi.yy",

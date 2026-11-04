@@ -40,7 +40,7 @@ function voronoi_in_rect(_voronoi, _rect) {
 }
 
 /// @func __voronoi_clip_axis(_vertices, _axis, _value, _keep_greater)
-/// @param {Array<Struct.Point2D>} _vertices
+/// @param {Array<Struct.VoronoiPoint>} _vertices
 /// @param {String} _axis "x" or "y"
 /// @param {Real} _value Position of the clipping line
 /// @param {Bool} _keep_greater Keep the side with coordinates >= _value
@@ -62,7 +62,7 @@ function __voronoi_clip_axis(_vertices, _axis, _value, _keep_greater) {
 
     if (_curr_in != _prev_in) {
       var _t = (_value - _prev_c) / (_curr_c - _prev_c);
-      var _cross = new Point2D(lerp(_prev.x, _curr.x, _t), lerp(_prev.y, _curr.y, _t));
+      var _cross = new VoronoiPoint(lerp(_prev.x, _curr.x, _t), lerp(_prev.y, _curr.y, _t));
       if (_is_x) _cross.x = _value; else _cross.y = _value;
 
       array_push(_out, _cross);

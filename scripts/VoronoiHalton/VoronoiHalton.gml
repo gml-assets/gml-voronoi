@@ -1,5 +1,5 @@
-/// @func Halton(_halton_base, [_halton_seed])
-function Halton(_halton_base, _halton_seed = 1) constructor {
+/// @func VoronoiHalton(_halton_base, [_halton_seed])
+function VoronoiHalton(_halton_base, _halton_seed = 1) constructor {
   halton_base = _halton_base;
   halton_seed = abs(floor(_halton_seed));
 

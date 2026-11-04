@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"Halton",
+  "%Name":"VoronoiHalton",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"Halton",
+  "name":"VoronoiHalton",
   "parent":{
     "name":"Voronoi",
     "path":"folders/Voronoi.yy",

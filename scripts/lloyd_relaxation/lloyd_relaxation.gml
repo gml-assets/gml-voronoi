@@ -23,9 +23,9 @@ function lloyd_relaxation(_voronoi) {
 
     if (_area == 0) {
       var _site = _voronoi[_i].site;
-      _points[_i] = new Point2D(_site.x, _site.y);
+      _points[_i] = new VoronoiPoint(_site.x, _site.y);
     } else {
-      _points[_i] = new Point2D(_center_x / (3 * _area), _center_y / (3 * _area));
+      _points[_i] = new VoronoiPoint(_center_x / (3 * _area), _center_y / (3 * _area));
     }
   }
 

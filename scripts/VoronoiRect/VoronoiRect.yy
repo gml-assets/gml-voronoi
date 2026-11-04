@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"Rect",
+  "%Name":"VoronoiRect",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"Rect",
+  "name":"VoronoiRect",
   "parent":{
     "name":"Voronoi",
     "path":"folders/Voronoi.yy",

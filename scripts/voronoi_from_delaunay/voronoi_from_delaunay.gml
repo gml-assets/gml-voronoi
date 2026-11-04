@@ -48,8 +48,8 @@ function voronoi_from_delaunay(_points, _triangulation) {
       var _tri_next = _triangulation[_triangles[(_j + 1) % _triangles_n]];
 
       var _edge = [
-        new Point2D(_tri.circumcenter_x, _tri.circumcenter_y),
-        new Point2D(_tri_next.circumcenter_x, _tri_next.circumcenter_y)
+        new VoronoiPoint(_tri.circumcenter_x, _tri.circumcenter_y),
+        new VoronoiPoint(_tri_next.circumcenter_x, _tri_next.circumcenter_y)
       ];
 
       array_push(_polygon, _edge);

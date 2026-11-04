@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"Triangle",
+  "%Name":"__VoronoiTriangle",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"Triangle",
+  "name":"__VoronoiTriangle",
   "parent":{
-    "name":"Voronoi",
-    "path":"folders/Voronoi.yy",
+    "name":"Internals",
+    "path":"folders/Voronoi/Internals.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -1,5 +1,5 @@
-/// @func Point2D(_x, _y)
-function Point2D(_x, _y) constructor {
+/// @func VoronoiPoint(_x, _y)
+function VoronoiPoint(_x, _y) constructor {
   x = _x;
   y = _y;
   

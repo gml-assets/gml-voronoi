@@ -1,5 +1,5 @@
-/// @func Triangle(_p1, _p2, _p3)
-function Triangle(_p1, _p2, _p3) constructor {
+/// @func __VoronoiTriangle(_p1, _p2, _p3)
+function __VoronoiTriangle(_p1, _p2, _p3) constructor {
   /// @func circumcircle_x(_x1, _y1, _x2, _y2, _x3, _y3)
   static circumcircle_x = function(_x1, _y1, _x2, _y2, _x3, _y3) {
     var _a = _x1 * _x1 + _y1 * _y1;

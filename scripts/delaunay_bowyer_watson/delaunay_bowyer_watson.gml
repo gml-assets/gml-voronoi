@@ -35,10 +35,10 @@ function delaunay_bowyer_watson(_points, _margin = 32) {
   var _h  = _aabb_bottom - _aabb_top;
 
   // Super triangle
-  var _super_triangle = new Triangle(
-    new Point2D(_aabb_left - _hw, _aabb_bottom),
-    new Point2D(_aabb_left + _hw, _aabb_top - _h),
-    new Point2D(_aabb_right + _hw, _aabb_bottom)
+  var _super_triangle = new __VoronoiTriangle(
+    new VoronoiPoint(_aabb_left - _hw, _aabb_bottom),
+    new VoronoiPoint(_aabb_left + _hw, _aabb_top - _h),
+    new VoronoiPoint(_aabb_right + _hw, _aabb_bottom)
   );
 
   array_push(_triangulation, _super_triangle);
@@ -112,7 +112,7 @@ function delaunay_bowyer_watson(_points, _margin = 32) {
 
     // Re-triangulate the polygonal hole
     for (var _j = 0; _j < array_length(_polygon); ++_j) {
-      array_push(_triangulation, new Triangle(
+      array_push(_triangulation, new __VoronoiTriangle(
         _polygon[_j][0],
         _polygon[_j][1],
         _p
