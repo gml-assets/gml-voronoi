@@ -1,40 +1,28 @@
 /// @desc Draw output data
 draw_set_alpha(1);
-draw_set_color(c_white);
-draw_set_halign(fa_left);
-draw_text(8, room_height - 24, "Hold \"Q\" to show noise maps");
-draw_set_halign(fa_center);
-draw_text(room_width / 2, 8, seed);
-
 draw_set_color(BiomeType.Water);
 draw_rectangle(off_w, off_h, off_w + w, off_h + h, false);
 
-// Draw progress bar
-if (!done) {
-  draw_healthbar(
-    8,
-    room_height - 16,
-    room_width - 8,
-    room_height - 8,
-    (step / 9) * 100,
-    c_black, c_red, c_lime,
-    0,
-    true, true
-  );
-  exit;
-}
+if (!done) exit;
 
 var _len = array_length(voronoi);
 for (var _i = 0; _i < _len; ++_i) {
   var _el = voronoi[_i];
   var _polygon = array_length(_el.polygon);
-  
+
+  var _colour = _el.biome;
+  switch (map_view) {
+    case MapView.Elevation: _colour = make_colour_rgb(_el.elevation, _el.elevation, _el.elevation); break;
+    case MapView.Temperature: _colour = make_colour_rgb(_el.temperature, 0, 255 - _el.temperature); break;
+    case MapView.Precipitation: _colour = merge_colour(c_white, c_blue, _el.precipitation / 255); break;
+  }
+
   draw_primitive_begin(pr_trianglestrip);
   for (var _j = 0; _j < _polygon + 1; ++_j) {
     var _edge = _el.polygon[_j % _polygon];
-    
-    draw_vertex_color(_edge[0].x + off_w, _edge[0].y + off_h, _el.biome, 1);
-    draw_vertex_color(_el.site.x + off_w, _el.site.y + off_h, _el.biome, 1);
+
+    draw_vertex_color(_edge[0].x + off_w, _edge[0].y + off_h, _colour, 1);
+    draw_vertex_color(_el.site.x + off_w, _el.site.y + off_h, _colour, 1);
   }
   draw_primitive_end();
 }
@@ -70,6 +58,6 @@ for (var _i = 0; _i < array_length(voronoi); ++_i) {
 
   for (var _j = 0; _j < _polygon; ++_j) {
     var _edge = _el.polygon[_j];
-    draw_arrow(_edge[0].x + off_w, _edge[0].y + off_h, _edge[1].x + off_w, _edge[1].y + off_h, 10);
+    draw_arrow(_edge[0].x + off_w, _edge[0].y + off_h, _edge[1].x + off_w, _edge[1].y + off_h, 2);
   }
 }

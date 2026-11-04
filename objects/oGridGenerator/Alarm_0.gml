@@ -12,11 +12,12 @@ switch (step) {
     }
     
     // Fixed bounds, so every point has a closed cell
+    var _m = 32;
     bounds = [
-      new Point2D(-off_w, -off_h),
-      new Point2D(w + off_w, -off_h),
-      new Point2D(-off_w, h + off_h),
-      new Point2D(w + off_w, h + off_h),
+      new Point2D(-_m, -_m),
+      new Point2D(w + _m, -_m),
+      new Point2D(-_m, h + _m),
+      new Point2D(w + _m, h + _m),
     ];
 
     alarm[0] = 1;
@@ -135,6 +136,7 @@ switch (step) {
       var _v = buffer_peek(noise_elevation_buffer, _x + _y * noise_size, buffer_u8);
       
       // Assign base biome
+      _el.elevation = _v;
       _el.biome = (_v < SEA_LEVEL) ? BiomeType.Water : BiomeType.Land;
     }
     #endregion
@@ -225,7 +227,10 @@ switch (step) {
       
       var _temp = buffer_peek(noise_temperature_buffer, _x + _y * noise_size, buffer_u8);
       var _prec = buffer_peek(noise_precipitation_buffer, _x + _y * noise_size, buffer_u8);
-      
+
+      _el.temperature = _temp;
+      _el.precipitation = _prec;
+
       if (_el.biome == BiomeType.Land) {
         _el.biome = whittaker_diagram(real(_temp), real(_prec));
       }

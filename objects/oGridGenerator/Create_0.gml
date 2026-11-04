@@ -1,13 +1,26 @@
 /// @desc Init generation
+enum MapView { Biomes, Elevation, Temperature, Precipitation }
+
 w = 192;
 h = 192;
 
-off_w = (room_width - w) / 2;
-off_h = (room_height - h) / 2;
+off_h = floor((room_height - h) / 2);
+off_w = off_h;
+
+display_set_gui_size(room_width * 2, room_height * 2);
+
+map_view = MapView.Biomes;
+seed_dialog = -1;
 
 // Seeding
-randomize();
-seed = random_get_seed();
+if (variable_global_exists("next_seed") && global.next_seed != undefined) {
+  seed = global.next_seed;
+  global.next_seed = undefined;
+} else {
+  randomize();
+  seed = random_get_seed();
+}
+random_set_seed(seed);
 
 var _seed_elevation = irandom(32_000);
 var _seed_temperature = irandom(32_000);
