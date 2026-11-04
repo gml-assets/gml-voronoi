@@ -14,11 +14,11 @@ seed_dialog = -1;
 
 // Seeding
 if (variable_global_exists("next_seed") && global.next_seed != undefined) {
-  seed = global.next_seed;
-  global.next_seed = undefined;
+    seed = global.next_seed;
+    global.next_seed = undefined;
 } else {
-  randomize();
-  seed = abs(random_get_seed());
+    randomize();
+    seed = abs(random_get_seed());
 }
 random_set_seed(seed);
 
@@ -38,16 +38,16 @@ noise_size = 64;
 gauss_kernel = gaussian_kernel_2d(noise_size);
 
 noise_elevation = get_perlin_noise({
-  size: noise_size, seed: _seed_elevation
+    size: noise_size, seed: _seed_elevation
 });
 
 noise_precipitation = get_perlin_noise({
-  size: noise_size, seed: _seed_precipitation,
-  scale: .35, persistence: .2
+    size: noise_size, seed: _seed_precipitation,
+    scale: .35, persistence: .2
 });
 
 noise_temperature = get_perlin_noise({
-  size: noise_size, seed: _seed_temperature
+    size: noise_size, seed: _seed_temperature
 });
 
 noise_elevation_buffer = -1;

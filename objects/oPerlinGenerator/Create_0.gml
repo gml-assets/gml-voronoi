@@ -20,6 +20,6 @@ _debug_surf_off = 0;
 
 var _id = id;
 with (oPerlinGenerator) {
-  if (id == _id) continue;
-  _debug_surf_off += size + 1;
+    if (id == _id) continue;
+    _debug_surf_off += size + 1;
 }
